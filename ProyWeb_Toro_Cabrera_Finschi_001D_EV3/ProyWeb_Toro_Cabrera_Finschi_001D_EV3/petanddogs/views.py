@@ -46,26 +46,32 @@ def calculadora(request):
     context={}
     return render(request, 'petanddogs/calculadora.html', context)
 
+@login_required
 def lindoCat(request):
     context={}
     return render(request,'petanddogs/LindoCat.html', context)
 
+@login_required
 def acana(request):
     context={}
     return render(request, 'petanddogs/Acana.html', context)
 
+@login_required
 def naturea(request):
     context={}
     return render(request, 'petanddogs/Naturea.html', context)
 
+@login_required
 def diamond(request):
     context={}
     return render(request, 'petanddogs/Diamond.html', context)
 
+@login_required
 def orijen(request):
     context={}
     return render(request, 'petanddogs/Orijen.html', context)
 
+@login_required
 def taste(request):
     context={}
     return render(request, 'petanddogs/Taste.html', context)
