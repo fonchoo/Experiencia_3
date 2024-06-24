@@ -49,10 +49,11 @@
         <div id="clock"></div>
         <h1>Lista de productos</h1>
         <br>
-
-        <button type="button">
-            <a href="{% url 'productosAdd' %}">Agregar</a>
-        </button>
+        {% if perms.petanddogs.add_producto%}
+            <button type="button">
+                <a href="{% url 'productosAdd' %}">Agregar</a>
+            </button>
+        {% endif %}
 
         <table>
             {% if productos %}
