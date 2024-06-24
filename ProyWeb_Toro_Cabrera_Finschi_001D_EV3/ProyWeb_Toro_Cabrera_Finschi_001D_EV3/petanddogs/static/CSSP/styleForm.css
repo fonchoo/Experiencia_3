@@ -1,0 +1,236 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,800;1,800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+	box-sizing: border-box;
+  font-size: 20px;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+h1{
+  transform: translateX(-35px);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  padding: 40px;
+  border-radius: 10px;
+  background-color: burlywood;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formulario{
+  width: 100%;
+}
+
+.formulario h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.formulario label {
+  font-size: 18px;
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.error {
+  color: red;
+}
+
+.btn button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 10px 25px;
+  border: none;
+  color: lightslategray;
+  background-color: wheat;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.btn button:hover{
+  background-color: lightslategray;
+  color: bisque;
+  transform: scale(1.1);
+}
+
+.header{
+  background-color: burlywood;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 70px;
+  width: 100%;
+  padding: 5px 10%;
+  font-family: 'Nunito', sans-serif;
+}
+
+.header .logo{
+  margin-right: auto;
+}
+
+.header .logo img{
+  height: 60px;
+  width: auto;
+  transition: all 0.3s;
+}
+
+.header .nav-links{
+  list-style: none;
+  margin-top: 20px;
+}
+
+.header .nav-links li{
+  display: inline-block;
+}
+
+.header .nav-links li:hover,
+.overlay a:hover{
+  transform: scale(1.1);
+  transition: all 0.3s;
+}
+
+.header .nav-links a{
+  font-size: 700;
+  color: lightslategray;
+}
+
+.header .nav-links li a:hover{
+  color: bisque;
+}
+
+.menu{
+  display: none;
+}
+
+.header .btn button,
+.header .menu button{
+  font-weight: 700;
+  padding: 10px 25px;
+  border: none;
+  color: lightslategray;
+  background-color: wheat;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  margin-left: 50px;
+}
+
+
+.header .btn button:hover,
+.header .menu button:hover{
+  background-color: lightslategray;
+  color: bisque;
+  transform: scale(1.1);
+}
+
+@media screen and (max-width:1700px){
+  .nav-links, .btn{
+      display: none;
+  }
+  .menu{
+      display: inherit;
+  }
+}
+
+/*Nav*/
+.header a{
+  text-decoration: none;
+}
+
+.header .overlay{
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  background-color: rgba(33, 49, 63, .95); 
+  overflow: hidden;
+  transition: all 0.3s ease 0s;
+}
+
+.header .overlay .overlay-content{
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.header .overlay a{
+  padding: 15px;
+  font-size: 36px;
+  display: block;
+  transition: all 0.3s ease 0s;
+  font-weight: 700;
+  color: #eceff1;
+}
+
+.header .overlay a:hover,
+.header .overlay a:focus{
+  color: #ffbc0e;
+}
+
+.header .overlay .close{
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 65px;
+}
+
+@media screen and (max-height:450px){
+  .header .overlay a{
+      font-size: 20px;
+  }
+
+  .header .overlay .close{
+      font-size: 40px;
+      top: 15px;
+      right: 35px;
+  }
+}
+
+.fadein{
+  animation: fadein 1s forwards;
+}
+
+@keyframes fadein{
+  from{opacity: 0;}
+  to {opacity: 1;}
+}
+
+#icon-register{
+  cursor: pointer;
+  color: bisque;
+  transition: all 0.3s;
+  transform: scale(1.2);
+  transform: translateX(50px);
+}
+
+#icon-register:hover{
+  color: lightslategray;
+}

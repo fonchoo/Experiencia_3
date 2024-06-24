@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,800;1,800&display=swap');
+
+.header{
+    background-color: burlywood;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 70px;
+    width: 100%;
+    padding: 5px 10%;
+    font-family: 'Nunito', sans-serif;
+}
+
+.header .logo{
+    margin-right: auto;
+}
+
+.header .logo img{
+    height: 60px;
+    width: auto;
+    transition: all 0.3s;
+}
+
+.header .nav-links{
+    list-style: none;
+    margin-top: auto;
+}
+
+.header .nav-links li{
+    display: inline-block;
+}
+
+.header .nav-links li:hover,
+.overlay a:hover{
+    transform: scale(1.1);
+    transition: all 0.3s;
+}
+
+.header .nav-links a{
+    font-size: 700;
+    color: lightslategray;
+}
+
+.header .nav-links li a:hover{
+    color: bisque;
+}
+
+.menu{
+    display: none;
+}
+
+.header .btn button,
+.header .menu button{
+    font-weight: 700;
+    padding: 10px 25px;
+    border: none;
+    color: lightslategray;
+    background-color: wheat;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    margin-left: 50px;
+}
+
+
+.header .btn button:hover,
+.header .menu button:hover{
+    background-color: lightslategray;
+    color: bisque;
+    transform: scale(1.1);
+}
+
+@media screen and (max-width:1350px){
+    .nav-links, .btn{
+        display: none;
+    }
+    .menu{
+        display: inherit;
+    }
+}
+
+/*Nav*/
+.header a{
+    text-decoration: none;
+}
+
+.header .overlay{
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: rgba(33, 49, 63, .95); 
+    overflow: hidden;
+    transition: all 0.3s ease 0s;
+}
+
+.header .overlay .overlay-content{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .overlay a{
+    padding: 15px;
+    font-size: 36px;
+    display: block;
+    transition: all 0.3s ease 0s;
+    font-weight: 700;
+    color: #eceff1;
+}
+
+.header .overlay a:hover,
+.header .overlay a:focus{
+    color: #ffbc0e;
+}
+
+.header .overlay .close{
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 65px;
+}
+
+@media screen and (max-height:450px){
+    .header .overlay a{
+        font-size: 20px;
+    }
+
+    .header .overlay .close{
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+#icon-register{
+    cursor: pointer;
+    color: bisque;
+    transition: all 0.3s;
+    transform: scale(1.2);
+    transform: translateX(50px);
+}
+
+#icon-register:hover{
+    color: lightslategray;
+}
+main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.image-container img {
+    width: 80%; /* Reduce el ancho de las imágenes al 80% del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+article {
+    box-shadow: 0px 0px 1px #000;
+    box-shadow: 0px 0px 1px #000;
+    padding: 10px; /* Agrega un poco de padding para que se vea más limpio */
+    background-color: #f9f9f9; /* Color de fondo para destacar las imágenes */
+    border-radius: 5px; /* Bordes redondeados para una apariencia más suave */
+}
+
+h2{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    font-size: 16px;
+    background-color:blanchedalmond;
+    width: 100%;
+    height: 100vh;
+}
+
+.titulo{
+    text-align: center;
+}
+
+.nav-bg{
+    background-color: rgb(233, 202, 164); /*para el color de fondo de la barra de menu */
+}
+
+.contenedor1{ 
+    max-width: 120rem; /*tomara el maximo de 1200 megapixeles.... esto es complementario para el tema de lo responsive */
+    margin:0 auto;
+}
+    
+.navegacion-principal{
+    display: flex; /*se habilitan los elementos de izquierda a derecha .. ademas habilita las propiedades de flexbock tendremos accesos a nuevas propiedades */  
+    justify-content: space-evenly; /*justify content los distribuye horizontalmente.... space between los separa*/    
+    align-items: center;
+}
+    
+.navegacion-principal a { /*para modificar las palabras dentro del menu*/
+    
+    text-decoration: none; /*para eliminar el subrayado de los enlaces*/
+    color:aliceblue; /*color a las palabras*/
+    font-size: 1rem;
+    font-weight: bold; /*para dejar la palabra en negrita*/
+    padding: 1rem;/*esto hara que todo el entorno de las letras al llevar el puntero se visualice 
+    el color que coloque abajo en .navegacion-principal a:hover ... sera de color negro*/  
+}
+    
+.navegacion-principal a:hover{ /* esto hace que las palabras de la clase de navagacion-principal a tomen un color de fondo (color chocolate que fue el que elegi) al llevar el puntero */
+    background-color: tan;
+    color:black; /*cambiara el color de las palabras al acercar el puntero eran blancas queran en negras*/
+    border-radius: 30px;
+}
+.img-nav{
+    max-width: 100%;
+    height: 60px;
+}
+
+
+
+
+.pie-pagina{
+    width: 100%;
+    background-color: dimgray;
+    margin-top: auto;
+}
+
+.pie-pagina .grupo-1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.pie-pagina .grupo-1 .box figure{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+.pie-pagina .grupo-1 .box figure img{
+    width: 250px;
+}
+
+.pie-pagina .grupo-1 .box h2{
+    color: #fff;
+    font-size: 10px;
+}
+
+.pie-pagina .grupo-1 .box p{
+    color: #efefef;
+    margin-bottom: 10px;
+    font-size: 10px;
+}
+
+.pie-pagina .grupo-1 .red-social a{
+    display: inline-block;
+    text-decoration: none;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: #fff;
+    margin-right: 10px;
+    background-color: #0d2033;
+    text-align: center;
+    transition: all 300ms ease;
+    border-radius: 50%;
+}
+
+#face:hover{
+    color: aqua;  
+}
+
+#insta:hover{
+    color: fuchsia;
+}
+/* Hasta aca se edita como se vera el nombre de los integrantes y el mostrar
+las redes sociales*/
+
+.pie-pagina .grupo-2{
+    background-color: #0a1a2a;
+    padding: 10px 20px;
+    text-align: center;
+    color: #fff;
+}
+
+.pie-pagina .grupo-2 small{
+    font-size: 15px;
+}
+
+#clock {
+    font-size: 24px;
+    text-align: left;
+}
+
+@media screen and (max-widht:800px) {
+    .pie-pagina .grupo-1{
+        width: 100%;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap:50px;
+        padding: 45px 0px
+    }
+    
+}
+
+

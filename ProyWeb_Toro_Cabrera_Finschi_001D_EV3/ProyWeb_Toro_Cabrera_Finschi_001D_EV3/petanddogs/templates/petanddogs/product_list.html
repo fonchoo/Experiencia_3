@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/miStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/productos.css' %}"> <!-- Enlace al archivo CSS externo -->
+    <title>CRUD</title>
+    <script src="https://kit.fontawesome.com/f879910058.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="fadein">
+        <header class="header">
+            <div class="logo">
+                <img src="{% static 'IMG/logo.jpg' %}" alt="Logo PetDogs&Amigos">
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="{% url 'index' %}" class="btn"><button>Inicio</button></a></li>
+                    <li><a href="{% url 'quienessomos' %}" class="btn"><button>Quienes Somos</button></a></li>
+                    <li><a href="{% url 'galeria' %}" class="btn"><button>Galeria</button></a></li>
+                    <li><a href="{% url 'adopcion' %}" class="btn"><button> Adopcion</button></a></li>
+                    <li><a href="{% url 'razas' %}" class="btn"><button>Razas de perro</button></a></li>
+                    {% if request.user.is_authenticated%}
+                        <li><a href="{% url 'perfil' %}" ><i class="fa-solid fa-user" id="icon-register"></i></a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}"><i class="fa-solid fa-user" id="icon-register"></i></a></li>
+                    {% endif %}
+                </ul>
+            </nav> 
+            <a onclick="openNav()" class="menu"><button>Menu</button></a>
+            <div class="overlay" id="mobile-menu">
+                <a onclick="closeNav()" href="" class="close">&times;</a>
+                <div class="overlay-content">
+                    <a href="{% url 'index' %}">Inicio</a>
+                    <a href="{% url 'quienessomos' %}">Quienes Somos</a>
+                    <a href="{% url 'galeria' %}">Galeria</a> 
+                    <a href="{% url 'adopcion' %}"> Adopcion</a>
+                    <a href="{% url 'razas' %}">Razas de perro</a>
+                    {% if request.user.is_authenticated%}
+                        <a href="{% url 'perfil' %}">Perfil</a>
+                    {% else %}
+                        <a href="{% url 'login' %}">Registro</a>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+        <div id="clock"></div>
+        <h1>Lista de productos</h1>
+        <br>
+
+        <button type="button">
+            <a href="{% url 'productosAdd' %}">Agregar</a>
+        </button>
+
+        <table>
+            {% if productos %}
+                <thead>
+                    <tr>
+                        <th>Id producto</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Categoria</th>
+                        <th>Imagen</th>
+                        {% if perms.petanddogs.delete_producto%}
+                            <th>Eliminar</th>
+                        {% endif %}
+                        {% if perms.petanddogs.change_producto%}
+                            <th>Modificar</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in productos %}
+                        <tr>
+                            <td>{{ x.id_producto }}</td>
+                            <td>{{ x.nombre }}</td>
+                            <td>{{ x.descripcion }}</td>
+                            <td>{{ x.precio }}</td>
+                            <td>{{ x.stock }}</td>
+                            <td>{{ x.categoria }}</td>
+                            <td>
+                                {% if x.imagen %}
+                                    <img src="{{ x.imagen.url }}" alt="{{ x.nombre }}" style="width: 100px; height: auto;">
+                                {% else %}
+                                    No disponible
+                                {% endif %}
+                            </td>
+                            {% if perms.petanddogs.delete_producto %}
+                                <td><a href="{% url 'productos_del' pk=x.id_producto %}">Eliminar</a></td>
+                            {% endif %}
+                            {% if perms.petanddogs.change_producto %}
+                                <td><a href="{% url 'productos_findEdit' pk=x.id_producto %}">Modificar</a></td>
+                            {% endif %}
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            {% else %}
+                <p>No hay productos disponibles.</p>
+            {% endif %}
+        </table>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#idMensajes").delay(2000).fadeOut("slow");
+            });
+        </script>
+
+        <div id="idMensajes">
+            {% if mensaje %}
+                {{ mensaje }}
+            {% endif %}
+        </div>
+    </div>
+</body>
+<footer class="pie-pagina">
+    <div class="grupo-1">
+        <div class="box">
+            <h2>INTEGRANTES</h2>
+            <p>Esteban Toro</p>
+            <p>Macarena Cabrera</p>
+            <p>Patricio Finschi</p>
+        </div>
+        <div class="box">
+            <h2>SÍGUENOS</h2>
+            <div class="red-social">
+                <a href="https://www.facebook.com/PetDogyAmigos" id="face" class="fa fa-facebook" target="_blank"></a>
+                <a href="https://www.instagram.com/petdogyamigos" id="insta" class="fa fa-instagram" target="_blank"></a>
+            </div>
+        </div>
+    </div>
+    <div class="grupo-2">
+        <small>&copy; 2024 <b>PET DOG & AMIGOS</b> -  Todos los Derechos Reservados.</small>
+    </div>
+</footer>
+</html>
