@@ -53,7 +53,7 @@
                     {% if request.user.is_authenticated%}
                         <li><a href="{% url 'perfil' %}" ><i class="fa-solid fa-user" id="icon-register"></i></a></li>
                     {% else %}
-                        <li><a href="{% url 'login' %}"><i class="fa-solid fa-user" id="icon-register"></i></a></li>
+                        <li><a href="{% url 'FormRegistro' %}"><i class="fa-solid fa-user" id="icon-register"></i></a></li>
                     {% endif %}
                 </ul>
             </nav> 
