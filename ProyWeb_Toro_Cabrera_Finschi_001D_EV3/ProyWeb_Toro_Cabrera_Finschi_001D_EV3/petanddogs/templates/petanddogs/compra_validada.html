@@ -1,7 +1,10 @@
 {% extends "petanddogs/base.html" %}
 {% load multiplicacion %}
+{% load static %}
 {% block content %}
-<h1>Compra Realizada</h1>
+<link rel="stylesheet" href="{% static 'CSS/compra.css' %}">
+<div class="container">
+  <h1>Compra Realizada</h1>
     <p>Gracias por tu compra. Aquí están los detalles:</p>
     <p>Boleta ID: {{ boleta.id }}</p>
     <p>Cliente: {{ boleta.cliente.email }}</p>
@@ -29,4 +32,5 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
 {% endblock %}
