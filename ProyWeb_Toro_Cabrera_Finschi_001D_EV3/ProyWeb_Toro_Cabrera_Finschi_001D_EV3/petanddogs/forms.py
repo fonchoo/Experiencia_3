@@ -3,6 +3,8 @@ from .models import Producto
 from django.contrib.auth.models import User
 from django import forms
 from .models import CustomUser
+from django import forms
+from .models import DetalleCompra
 
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -53,6 +55,16 @@ class UserEditForm(forms.ModelForm):
             if CustomUser.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
                 raise forms.ValidationError('El emmail ya esta en uso.')
             return email
+
+class AgregarAlCarritoForm(forms.ModelForm):
+    class Meta:
+        model = DetalleCompra
+        fields = ['producto', 'cantidad']
+
+    def __init__(self, *args, **kwargs):
+        super(AgregarAlCarritoForm, self).__init__(*args, **kwargs)
+        self.fields['cantidad'].widget.attrs.update({'min': 1, 'value': 1})
+
         
         
         

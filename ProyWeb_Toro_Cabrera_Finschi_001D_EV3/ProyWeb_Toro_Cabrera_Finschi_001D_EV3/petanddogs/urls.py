@@ -26,5 +26,8 @@ urlpatterns = [
     path('logout/',views.exit, name='exit'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('registrosAdd', views.registroAdd, name='registroAdd'),
+    path('agregar_al_carrito/<str:producto_id>', views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('mostrar_carrito/', views.mostrar_carrito, name='mostrar_carrito'),
+    path('procesar_compra/', views.procesar_compra, name='procesar_compra'),
 ]
 

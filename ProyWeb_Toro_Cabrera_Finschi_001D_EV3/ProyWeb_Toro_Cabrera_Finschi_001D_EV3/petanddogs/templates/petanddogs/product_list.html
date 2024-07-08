@@ -20,25 +20,27 @@
                     <li><a href="{% url 'index' %}" class="btn"><button>Inicio</button></a></li>
                     <li><a href="{% url 'quienessomos' %}" class="btn"><button>Quienes Somos</button></a></li>
                     <li><a href="{% url 'galeria' %}" class="btn"><button>Galeria</button></a></li>
-                    <li><a href="{% url 'adopcion' %}" class="btn"><button> Adopcion</button></a></li>
+                    <li><a href="{% url 'adopcion' %}" class="btn"><button>Adopcion</button></a></li>
                     <li><a href="{% url 'razas' %}" class="btn"><button>Razas de perro</button></a></li>
-                    {% if request.user.is_authenticated%}
-                        <li><a href="{% url 'perfil' %}" ><i class="fa-solid fa-user" id="icon-register"></i></a></li>
+                    {% if request.user.is_authenticated %}
+                        <li><a href="{% url 'mostrar_carrito' %}" class="btn"><button>Carro de compra</button></a></li>
+                        <li><a href="{% url 'perfil' %}"><i class="fa-solid fa-user" id="icon-register"></i></a></li>
                     {% else %}
                         <li><a href="{% url 'FormRegistro' %}"><i class="fa-solid fa-user" id="icon-register"></i></a></li>
                     {% endif %}
                 </ul>
-            </nav> 
+            </nav>
             <a onclick="openNav()" class="menu"><button>Menu</button></a>
             <div class="overlay" id="mobile-menu">
                 <a onclick="closeNav()" href="" class="close">&times;</a>
                 <div class="overlay-content">
                     <a href="{% url 'index' %}">Inicio</a>
                     <a href="{% url 'quienessomos' %}">Quienes Somos</a>
-                    <a href="{% url 'galeria' %}">Galeria</a> 
-                    <a href="{% url 'adopcion' %}"> Adopcion</a>
+                    <a href="{% url 'galeria' %}">Galeria</a>
+                    <a href="{% url 'adopcion' %}">Adopcion</a>
                     <a href="{% url 'razas' %}">Razas de perro</a>
-                    {% if request.user.is_authenticated%}
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'mostrar_carrito' %}">Carrito</a>
                         <a href="{% url 'perfil' %}">Perfil</a>
                     {% else %}
                         <a href="{% url 'FormRegistro' %}">Registro</a>
@@ -49,7 +51,7 @@
         <div id="clock"></div>
         <h1>Lista de productos</h1>
         <br>
-        {% if perms.petanddogs.add_producto%}
+        {% if perms.petanddogs.add_producto %}
             <button type="button">
                 <a href="{% url 'productosAdd' %}">Agregar</a>
             </button>
@@ -66,11 +68,14 @@
                         <th>Stock</th>
                         <th>Categoria</th>
                         <th>Imagen</th>
-                        {% if perms.petanddogs.delete_producto%}
+                        {% if perms.petanddogs.delete_producto %}
                             <th>Eliminar</th>
                         {% endif %}
-                        {% if perms.petanddogs.change_producto%}
+                        {% if perms.petanddogs.change_producto %}
                             <th>Modificar</th>
+                        {% endif %}
+                        {% if request.user.is_authenticated %}
+                            <th>Agregar al Carrito</th>
                         {% endif %}
                     </tr>
                 </thead>
@@ -96,7 +101,12 @@
                             {% if perms.petanddogs.change_producto %}
                                 <td><a href="{% url 'productos_findEdit' pk=x.id_producto %}">Modificar</a></td>
                             {% endif %}
-
+                            <td>
+                                <form method="POST" action="{% url 'agregar_al_carrito' x.id_producto %}">
+                                    {% csrf_token %}
+                                    <input type="number" name="cantidad" value="1" min="1" max="{{ x.stock }}">
+                                    <button type="submit">Agregar</button>
+                                </form>
                         </tr>
                     {% endfor %}
                 </tbody>

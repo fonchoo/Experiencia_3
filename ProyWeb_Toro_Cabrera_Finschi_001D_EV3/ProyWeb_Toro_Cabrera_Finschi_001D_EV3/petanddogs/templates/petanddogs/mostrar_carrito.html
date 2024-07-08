@@ -1,0 +1,37 @@
+{% extends "petanddogs/base.html" %}
+{% load multiplicacion %}
+{% block content %}
+{% load static %}
+<link href="{% static 'CSS/carro.css' %}" rel="stylesheet">
+<div class="container">
+    <h1>Carrito de Compras</h1>
+        {% if carrito %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto_id, detalles in carrito.items %}
+                        <tr>
+                            <td>{{ detalles.nombre }}</td>
+                            <td>{{ detalles.precio }}</td>
+                            <td>{{ detalles.cantidad }}</td>
+                            <td>{{ detalles.precio|mul:detalles.cantidad }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <form method="POST" action="{% url 'procesar_compra' %}">
+                {% csrf_token %}
+                <button type="submit">Procesar Compra</button>
+            </form>
+        {% else %}
+            <p>No hay productos en el carrito.</p>
+        {% endif %}
+    </div>
+{% endblock %}
