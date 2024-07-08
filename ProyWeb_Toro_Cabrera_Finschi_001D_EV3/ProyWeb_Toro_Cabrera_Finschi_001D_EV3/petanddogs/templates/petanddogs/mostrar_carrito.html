@@ -1,24 +1,34 @@
 {% extends "petanddogs/base.html" %}
+{% load multiplicacion %}
 
 {% block content %}
-  <h2>Tu Carrito de Compras</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for detalle in detalles %}
-        <tr>
-          <td>{{ detalle.producto.nombre }}</td>
-          <td>{{ detalle.cantidad }}</td>
-          <td>{{ detalle.precio }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a href="{% url 'validar_compra' %}">Validar Compra</a>
+<h1>Carrito de Compras</h1>
+    {% if carrito %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto_id, detalles in carrito.items %}
+                    <tr>
+                        <td>{{ detalles.nombre }}</td>
+                        <td>{{ detalles.precio }}</td>
+                        <td>{{ detalles.cantidad }}</td>
+                        <td>{{ detalles.precio|mul:detalles.cantidad }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <form method="POST" action="{% url 'procesar_compra' %}">
+            {% csrf_token %}
+            <button type="submit">Procesar Compra</button>
+        </form>
+    {% else %}
+        <p>No hay productos en el carrito.</p>
+    {% endif %}
 {% endblock %}

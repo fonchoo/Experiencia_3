@@ -101,15 +101,12 @@
                             {% if perms.petanddogs.change_producto %}
                                 <td><a href="{% url 'productos_findEdit' pk=x.id_producto %}">Modificar</a></td>
                             {% endif %}
-                            {% if request.user.is_authenticated %}
-                                <td>
-                                    <form method="post" action="{% url 'agregar_al_carrito' x.id_producto %}">
-                                        {% csrf_token %}
-                                        <input type="number" name="cantidad" min="1" value="1">
-                                        <button type="submit">Agregar</button>
-                                    </form>
-                                </td>
-                            {% endif %}
+                            <td>
+                                <form method="POST" action="{% url 'agregar_al_carrito' x.id_producto %}">
+                                    {% csrf_token %}
+                                    <input type="number" name="cantidad" value="1" min="1" max="{{ x.stock }}">
+                                    <button type="submit">Agregar</button>
+                                </form>
                         </tr>
                     {% endfor %}
                 </tbody>

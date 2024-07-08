@@ -67,6 +67,7 @@ class BoletaCompra(models.Model):
     def __str__(self):
         return f"Boleta {self.id} - {self.cliente.email}"
 
+
 class DetalleCompra(models.Model):
     boleta = models.ForeignKey(BoletaCompra, related_name='detalles', on_delete=models.CASCADE, verbose_name="Boleta de Compra")
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name="Producto")

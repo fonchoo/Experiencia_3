@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
 from .models import CustomUser
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
-from .forms import AgregarAlCarritoForm
+from django.utils import timezone
 # Create your views here.
 def index(request):
     context={}
@@ -231,30 +231,42 @@ def exit(request):
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, id_producto=producto_id)
     if request.method == 'POST':
-        form = AgregarAlCarritoForm(request.POST)
-        if form.is_valid():
-            cantidad = form.cleaned_data['cantidad']
-            boleta, created = BoletaCompra.objects.get_or_create(cliente=request.user, estado_pedido='recibido')
-            DetalleCompra.objects.create(
-                boleta=boleta,
-                producto=producto,
-                cantidad=cantidad,
-                precio=producto.precio * cantidad
-            )
-            return redirect('petanddogs/mostrar_carrito.html')
-    else:
-        form = AgregarAlCarritoForm(initial={'producto': producto})
-    return render(request, 'petanddogs/agregar_al_carrito.html', {'form': form, 'producto': producto})
+        cantidad = int(request.POST.get('cantidad', 1))
+        carrito = request.session.get('carrito', {})
+        if producto_id in carrito:
+            carrito[producto_id]['cantidad'] += cantidad
+        else:
+            carrito[producto_id] = {
+                'nombre': producto.nombre,
+                'precio': producto.precio,
+                'cantidad': cantidad,
+                'imagen': producto.imagen.url if producto.imagen else None
+            }
+        request.session['carrito'] = carrito
+        return redirect('mostrar_carrito')
+
+    return render(request, 'agregar_al_carrito.html', {'producto': producto})
 
 @login_required
 def mostrar_carrito(request):
-    boleta, created = BoletaCompra.objects.get_or_create(cliente=request.user, estado_pedido='recibido')
-    detalles = boleta.detalles.all()
-    return render(request, 'petanddogs/mostrar_carrito.html', {'boleta': boleta, 'detalles': detalles})
+    carrito = request.session.get('carrito', {})
+    return render(request, 'petanddogs/mostrar_carrito.html', {'carrito': carrito})
 
 @login_required
-def validar_compra(request):
-    boleta = get_object_or_404(BoletaCompra, cliente=request.user, estado_pedido='recibido')
-    boleta.estado_pedido = 'validado'
+def procesar_compra(request):
+    carrito = request.session.get('carrito', {})
+    if not carrito:
+        return redirect('mostrar_carrito')
+
+    boleta = BoletaCompra(cliente=request.user, fecha_compra=timezone.now(), estado_pedido='recibido')
     boleta.save()
+    
+    for producto_id, detalles in carrito.items():
+        producto = get_object_or_404(Producto, id_producto=producto_id)
+        cantidad = detalles['cantidad']
+        precio = detalles['precio']
+        detalle = DetalleCompra(boleta=boleta, producto=producto, cantidad=cantidad, precio=precio)
+        detalle.save()
+
+    request.session['carrito'] = {}
     return render(request, 'petanddogs/compra_validada.html', {'boleta': boleta})

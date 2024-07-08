@@ -28,6 +28,6 @@ urlpatterns = [
     path('registrosAdd', views.registroAdd, name='registroAdd'),
     path('agregar_al_carrito/<str:producto_id>', views.agregar_al_carrito, name='agregar_al_carrito'),
     path('mostrar_carrito/', views.mostrar_carrito, name='mostrar_carrito'),
-    path('validar_compra/', views.validar_compra, name='validar_compra'),
+    path('procesar_compra/', views.procesar_compra, name='procesar_compra'),
 ]
 
