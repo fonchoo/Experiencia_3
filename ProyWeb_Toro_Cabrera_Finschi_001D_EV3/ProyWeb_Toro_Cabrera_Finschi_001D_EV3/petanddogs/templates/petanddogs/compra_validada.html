@@ -1,0 +1,10 @@
+{% extends "petanddogs/base.html" %}
+
+{% block content %}
+  <h2>Compra Validada</h2>
+  <p>Tu compra ha sido validada con éxito.</p>
+  <p>Boleta ID: {{ boleta.id }}</p>
+  <p>Fecha de Compra: {{ boleta.fecha_compra }}</p>
+  <p>Estado del Pedido: {{ boleta.estado_pedido }}</p>
+  <a href="{% url 'index' %}">Volver al Inicio</a>
+{% endblock %}

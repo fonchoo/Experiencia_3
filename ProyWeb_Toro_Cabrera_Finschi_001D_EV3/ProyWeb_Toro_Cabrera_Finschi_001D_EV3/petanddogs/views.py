@@ -1,14 +1,15 @@
 from django.shortcuts import render
-from .models import Categoria, Producto
+from .models import Categoria, Producto, BoletaCompra, DetalleCompra
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate,login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 from .forms import UserEditForm
 from django.contrib.auth.hashers import make_password
 from .models import CustomUser
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
+from .forms import AgregarAlCarritoForm
 # Create your views here.
 def index(request):
     context={}
@@ -225,3 +226,35 @@ def edit_profile(request):
 def exit(request):
     logout(request)
     return redirect('/')
+
+@login_required
+def agregar_al_carrito(request, producto_id):
+    producto = get_object_or_404(Producto, id_producto=producto_id)
+    if request.method == 'POST':
+        form = AgregarAlCarritoForm(request.POST)
+        if form.is_valid():
+            cantidad = form.cleaned_data['cantidad']
+            boleta, created = BoletaCompra.objects.get_or_create(cliente=request.user, estado_pedido='recibido')
+            DetalleCompra.objects.create(
+                boleta=boleta,
+                producto=producto,
+                cantidad=cantidad,
+                precio=producto.precio * cantidad
+            )
+            return redirect('petanddogs/mostrar_carrito.html')
+    else:
+        form = AgregarAlCarritoForm(initial={'producto': producto})
+    return render(request, 'petanddogs/agregar_al_carrito.html', {'form': form, 'producto': producto})
+
+@login_required
+def mostrar_carrito(request):
+    boleta, created = BoletaCompra.objects.get_or_create(cliente=request.user, estado_pedido='recibido')
+    detalles = boleta.detalles.all()
+    return render(request, 'petanddogs/mostrar_carrito.html', {'boleta': boleta, 'detalles': detalles})
+
+@login_required
+def validar_compra(request):
+    boleta = get_object_or_404(BoletaCompra, cliente=request.user, estado_pedido='recibido')
+    boleta.estado_pedido = 'validado'
+    boleta.save()
+    return render(request, 'petanddogs/compra_validada.html', {'boleta': boleta})

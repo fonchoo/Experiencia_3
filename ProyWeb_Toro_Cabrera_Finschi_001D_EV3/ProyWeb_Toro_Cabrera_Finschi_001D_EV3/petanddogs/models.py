@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
+from django.conf import settings
+
 
 class Categoria(models.Model):
     idCategoria = models.IntegerField(primary_key=True, verbose_name="Id de categoria")
@@ -56,3 +58,26 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
+    
+class BoletaCompra(models.Model):
+    cliente = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="Cliente")
+    fecha_compra = models.DateTimeField(default=timezone.now, verbose_name="Fecha de Compra")
+    estado_pedido = models.CharField(max_length=20, default="recibido", verbose_name="Estado del Pedido")
+
+    def __str__(self):
+        return f"Boleta {self.id} - {self.cliente.email}"
+
+class DetalleCompra(models.Model):
+    boleta = models.ForeignKey(BoletaCompra, related_name='detalles', on_delete=models.CASCADE, verbose_name="Boleta de Compra")
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, verbose_name="Producto")
+    cantidad = models.PositiveIntegerField(verbose_name="Cantidad")
+    precio = models.PositiveIntegerField(verbose_name="Precio")
+
+    def __str__(self):
+        return f"Detalle {self.id} - {self.producto.nombre}"
+
+    def save(self, *args, **kwargs):
+        # Descontar el stock al guardar el detalle de compra
+        self.producto.stock -= self.cantidad
+        self.producto.save()
+        super(DetalleCompra, self).save(*args, **kwargs)
