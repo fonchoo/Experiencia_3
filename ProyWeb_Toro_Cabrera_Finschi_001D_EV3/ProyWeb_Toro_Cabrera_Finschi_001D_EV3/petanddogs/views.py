@@ -10,6 +10,8 @@ from .models import CustomUser
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.utils import timezone
+from django.http import Http404
+from django.core.paginator import Paginator
 # Create your views here.
 def index(request):
     context={}
@@ -75,7 +77,18 @@ def taste(request):
 @permission_required('petanddogs.view_producto')
 def crud(request):
     productos= Producto.objects.all()
-    context={'productos':productos}
+    page = request.GET.get('page',1)
+    
+    try:
+        paginator = Paginator(productos,10)
+        productos = paginator.page(page)
+    except:
+        raise Http404
+        
+    context={
+        'productos':productos,
+        'paginator': paginator
+        }
     return render(request, 'petanddogs/product_list.html',context)
 
 @login_required
@@ -226,6 +239,8 @@ def edit_profile(request):
 def exit(request):
     logout(request)
     return redirect('/')
+
+#***************************** Carro de compra *************************************
 
 @login_required
 def agregar_al_carrito(request, producto_id):
