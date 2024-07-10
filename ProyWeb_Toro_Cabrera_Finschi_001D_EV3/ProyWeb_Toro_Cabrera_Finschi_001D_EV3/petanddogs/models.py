@@ -20,6 +20,7 @@ class Producto(models.Model):
     precio=models.IntegerField(blank=True, null=True, verbose_name="Precio")
     stock = models.IntegerField(verbose_name="Stock")
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoría")
+    activo           = models.IntegerField()
 
     def __str__(self):
         return self.nombre 
@@ -66,7 +67,6 @@ class BoletaCompra(models.Model):
 
     def __str__(self):
         return f"Boleta {self.id} - {self.cliente.email}"
-
 
 class DetalleCompra(models.Model):
     boleta = models.ForeignKey(BoletaCompra, related_name='detalles', on_delete=models.CASCADE, verbose_name="Boleta de Compra")

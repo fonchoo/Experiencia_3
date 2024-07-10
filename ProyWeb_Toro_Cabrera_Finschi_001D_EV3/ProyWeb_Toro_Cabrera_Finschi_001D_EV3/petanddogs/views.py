@@ -10,6 +10,9 @@ from .models import CustomUser
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.utils import timezone
+from django.http import Http404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import ProductoSearchForm
 # Create your views here.
 def index(request):
     context={}
@@ -78,11 +81,31 @@ def taste(request):
     return render(request, 'petanddogs/Taste.html', context)
 #***************************** CRUD *************************************
 @login_required
-@permission_required('petanddogs.view_producto')
 def crud(request):
-    productos= Producto.objects.all()
-    context={'productos':productos}
-    return render(request, 'petanddogs/product_list.html',context)
+    form = ProductoSearchForm()
+    query = request.GET.get('query', '')
+    productos = Producto.objects.all()
+
+    if query:
+        productos = productos.filter(nombre__icontains=query)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(productos, 10)
+
+    try:
+        productos = paginator.page(page)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
+
+    context = {
+        'productos': productos,
+        'paginator': paginator,
+        'form': form,
+        'query': query
+    }
+    return render(request, 'petanddogs/product_list.html', context)
 
 @login_required
 @permission_required('petanddogs.add_producto')
@@ -98,7 +121,8 @@ def productosAdd(request):
         imagen=request.FILES.get("imagen")
         precio=request.POST["precio"]
         stock=request.POST["stock"]
-        categoria=request.POST["categoria"]       
+        categoria=request.POST["categoria"]
+        activo="1"       
                 
         objCategoria=Categoria.objects.get(idCategoria = categoria)
         obj=Producto.objects.create(id_producto=id,
@@ -108,7 +132,7 @@ def productosAdd(request):
                                   precio=precio,
                                   stock=stock,
                                   categoria=objCategoria,
-                                  )
+                                  activo=1)
         obj.save()
         context={'mensaje':"Ok, datos grabados..."}
         return render(request,'petanddogs/productos_add.html',context)
@@ -138,7 +162,8 @@ def productosUpdate(request):
         imagen=request.FILES.get("imagen")
         precio=request.POST["precio"]
         stock=request.POST["stock"]
-        categoria=request.POST["categoria"]       
+        categoria=request.POST["categoria"]    
+        activo="1"   
                 
         objCategoria=Categoria.objects.get(idCategoria = categoria)
         
@@ -151,6 +176,7 @@ def productosUpdate(request):
         producto.precio=precio
         producto.stock=stock
         producto.categoria=objCategoria
+        producto.activo=1
         producto.save()
         
         categorias = Categoria.objects.all()
@@ -233,6 +259,8 @@ def exit(request):
     logout(request)
     return redirect('/')
 
+#***************************** Carro de compra *************************************
+
 @login_required
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, id_producto=producto_id)
@@ -276,3 +304,11 @@ def procesar_compra(request):
 
     request.session['carrito'] = {}
     return render(request, 'petanddogs/compra_validada.html', {'boleta': boleta})
+
+def lista_compras(request):
+    compras = BoletaCompra.objects.all()
+    context = {
+        'compras': compras
+    }
+    return render(request, 'petanddogs/lista_compras.html', context)
+

@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/miStyle.css' %}">
-    <link rel="stylesheet" href="{% static 'css/productos.css' %}"> <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="{% static 'CSS/miStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/productos.css' %}">
+    <link rel="stylesheet" href="{% static 'CSS/paginador.css' %}">
     <title>CRUD</title>
     <script src="https://kit.fontawesome.com/f879910058.js" crossorigin="anonymous"></script>
 </head>
@@ -48,8 +49,16 @@
                 </div>
             </div>
         </header>
+
         <div id="clock"></div>
         <h1>Lista de productos</h1>
+        <br>
+        <div class="search-container">
+            <form method="GET" action="{% url 'crud' %}">
+                <input type="text" name="query" placeholder="Buscar productos...">
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
         <br>
         {% if perms.petanddogs.add_producto %}
             <button type="button">
@@ -96,7 +105,7 @@
                                 {% endif %}
                             </td>
                             {% if perms.petanddogs.delete_producto %}
-                                <td><a href="{% url 'productos_del' pk=x.id_producto %}">Eliminar</a></td>
+                                <td><a href="{% url 'productos_del' pk=x.id_producto %}" class="delete-link">Eliminar</a></td>
                             {% endif %}
                             {% if perms.petanddogs.change_producto %}
                                 <td><a href="{% url 'productos_findEdit' pk=x.id_producto %}">Modificar</a></td>
@@ -114,11 +123,21 @@
                 <p>No hay productos disponibles.</p>
             {% endif %}
         </table>
+        <div>
+            {% include 'petanddogs/paginator.html' %}
+        </div>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
                 $("#idMensajes").delay(2000).fadeOut("slow");
+            });
+            document.querySelectorAll('.delete-link').forEach(function(element) {
+                element.addEventListener('click', function(event) {
+                    if (!confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                        event.preventDefault();
+                    }
+                });
             });
         </script>
 
@@ -150,3 +169,4 @@
     </div>
 </footer>
 </html>
+
