@@ -297,3 +297,10 @@ def procesar_compra(request):
     request.session['carrito'] = {}
     return render(request, 'petanddogs/compra_validada.html', {'boleta': boleta})
 
+def lista_compras(request):
+    compras = BoletaCompra.objects.all()
+    context = {
+        'compras': compras
+    }
+    return render(request, 'petanddogs/lista_compras.html', context)
+

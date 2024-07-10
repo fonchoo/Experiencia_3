@@ -34,3 +34,39 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+
+/* static/css/compras.css */
+
+.container-compras {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.tabla-compras {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f2f2f2;
+}
+
+.tabla-compras th, .tabla-compras td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.tabla-compras th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #f2f2f2;
+    color: black;
+}
+
+.tabla-compras tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tabla-compras tr:hover {
+    background-color: #dddddd;
+}
+

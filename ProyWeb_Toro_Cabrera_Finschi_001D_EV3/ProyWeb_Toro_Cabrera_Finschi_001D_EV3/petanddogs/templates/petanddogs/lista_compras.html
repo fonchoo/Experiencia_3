@@ -1,0 +1,36 @@
+{% extends "petanddogs/base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'CSS/compra.css' %}">
+<div class="container-compras">
+    <h1>Todas las Compras Realizadas</h1>
+    <table class="tabla-compras">
+        <thead>
+            <tr>
+                <th>Boleta ID</th>
+                <th>Cliente</th>
+                <th>Fecha de Compra</th>
+                <th>Estado del Pedido</th>
+                <th>Detalles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for compra in compras %}
+                <tr>
+                    <td>{{ compra.id }}</td>
+                    <td>{{ compra.cliente.email }}</td>
+                    <td>{{ compra.fecha_compra }}</td>
+                    <td>{{ compra.estado_pedido }}</td>
+                    <td>
+                        <ul>
+                            {% for detalle in compra.detalles.all %}
+                                <li>{{ detalle.producto.nombre }} - Cantidad: {{ detalle.cantidad }} - Precio: {{ detalle.precio }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

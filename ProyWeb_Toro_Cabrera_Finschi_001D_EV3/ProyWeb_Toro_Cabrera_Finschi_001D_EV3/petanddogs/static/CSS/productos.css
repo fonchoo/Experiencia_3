@@ -46,4 +46,30 @@ button a:hover {
     text-decoration: none;
     color: white;
 }
+/* static/css/miStyle.css */
+
+.search-container {
+    text-align: center; /* Centra el contenido del contenedor */
+    margin-bottom: 20px; /* Ajusta el margen inferior según sea necesario */
+}
+
+.search-container form {
+    display: inline-block; /* Permite que el formulario ocupe solo el ancho necesario */
+    margin-bottom: 10px; /* Ajusta el margen inferior del formulario */
+}
+
+.search-container input[type="text"],
+.search-container button {
+    padding: 10px; /* Ajusta el padding de los elementos para que se vean mejor */
+    font-size: 16px; /* Tamaño de fuente del input y el botón */
+}
+
+.search-container button {
+    background-color: #4CAF50; /* Color de fondo del botón */
+    color: white; /* Color de texto del botón */
+    border: none; /* Quita el borde del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    margin-left: 10px; /* Ajusta el margen izquierdo del botón */
+}
+
 
