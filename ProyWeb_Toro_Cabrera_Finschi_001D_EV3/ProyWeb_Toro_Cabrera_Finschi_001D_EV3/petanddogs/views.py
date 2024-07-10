@@ -11,7 +11,8 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.utils import timezone
 from django.http import Http404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import ProductoSearchForm
 # Create your views here.
 def index(request):
     context={}
@@ -76,20 +77,30 @@ def taste(request):
 @login_required
 @permission_required('petanddogs.view_producto')
 def crud(request):
-    productos= Producto.objects.all()
-    page = request.GET.get('page',1)
-    
+    form = ProductoSearchForm()
+    query = request.GET.get('query', '')
+    productos = Producto.objects.all()
+
+    if query:
+        productos = productos.filter(nombre__icontains=query)
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(productos, 10)
+
     try:
-        paginator = Paginator(productos,10)
         productos = paginator.page(page)
-    except:
-        raise Http404
-        
-    context={
-        'productos':productos,
-        'paginator': paginator
-        }
-    return render(request, 'petanddogs/product_list.html',context)
+    except PageNotAnInteger:
+        productos = paginator.page(1)
+    except EmptyPage:
+        productos = paginator.page(paginator.num_pages)
+
+    context = {
+        'productos': productos,
+        'paginator': paginator,
+        'form': form,
+        'query': query
+    }
+    return render(request, 'petanddogs/product_list.html', context)
 
 @login_required
 @permission_required('petanddogs.add_producto')
@@ -285,3 +296,4 @@ def procesar_compra(request):
 
     request.session['carrito'] = {}
     return render(request, 'petanddogs/compra_validada.html', {'boleta': boleta})
+

@@ -65,6 +65,10 @@ class AgregarAlCarritoForm(forms.ModelForm):
         super(AgregarAlCarritoForm, self).__init__(*args, **kwargs)
         self.fields['cantidad'].widget.attrs.update({'min': 1, 'value': 1})
 
+class ProductoSearchForm(forms.Form):
+    query = forms.CharField(label='Buscar', max_length=100)
+
+
         
         
         

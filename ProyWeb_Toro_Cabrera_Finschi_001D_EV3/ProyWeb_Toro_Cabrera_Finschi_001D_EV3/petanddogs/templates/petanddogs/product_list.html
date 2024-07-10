@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/miStyle.css' %}">
     <link rel="stylesheet" href="{% static 'css/productos.css' %}">
-    <link rel="stylesheet" href="{% static 'css/paginador.css' %}"> <!-- Enlace al archivo CSS externo -->
+    <link rel="stylesheet" href="{% static 'css/paginador.css' %}">
     <title>CRUD</title>
     <script src="https://kit.fontawesome.com/f879910058.js" crossorigin="anonymous"></script>
 </head>
@@ -49,8 +49,14 @@
                 </div>
             </div>
         </header>
+
         <div id="clock"></div>
         <h1>Lista de productos</h1>
+        <br>
+        <form method="get" action="{% url 'crud' %}">
+            <input type="text" name="query" placeholder="Buscar productos..." value="{{ query }}">
+            <button type="submit">Buscar</button>
+        </form>
         <br>
         {% if perms.petanddogs.add_producto %}
             <button type="button">
@@ -154,3 +160,4 @@
     </div>
 </footer>
 </html>
+
