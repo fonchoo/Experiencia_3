@@ -20,6 +20,7 @@ class Producto(models.Model):
     precio=models.IntegerField(blank=True, null=True, verbose_name="Precio")
     stock = models.IntegerField(verbose_name="Stock")
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoría")
+    activo           = models.IntegerField()
 
     def __str__(self):
         return self.nombre 

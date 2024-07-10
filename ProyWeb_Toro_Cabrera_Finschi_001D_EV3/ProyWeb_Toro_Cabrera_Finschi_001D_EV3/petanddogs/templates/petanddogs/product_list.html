@@ -105,7 +105,7 @@
                                 {% endif %}
                             </td>
                             {% if perms.petanddogs.delete_producto %}
-                                <td><a href="{% url 'productos_del' pk=x.id_producto %}">Eliminar</a></td>
+                                <td><a href="{% url 'productos_del' pk=x.id_producto %}" class="delete-link">Eliminar</a></td>
                             {% endif %}
                             {% if perms.petanddogs.change_producto %}
                                 <td><a href="{% url 'productos_findEdit' pk=x.id_producto %}">Modificar</a></td>
@@ -131,6 +131,13 @@
         <script>
             $(document).ready(function(){
                 $("#idMensajes").delay(2000).fadeOut("slow");
+            });
+            document.querySelectorAll('.delete-link').forEach(function(element) {
+                element.addEventListener('click', function(event) {
+                    if (!confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                        event.preventDefault();
+                    }
+                });
             });
         </script>
 

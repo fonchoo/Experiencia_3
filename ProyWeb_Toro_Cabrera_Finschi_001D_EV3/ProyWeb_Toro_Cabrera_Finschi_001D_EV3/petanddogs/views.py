@@ -75,7 +75,6 @@ def taste(request):
     return render(request, 'petanddogs/Taste.html', context)
 #***************************** CRUD *************************************
 @login_required
-@permission_required('petanddogs.view_producto')
 def crud(request):
     form = ProductoSearchForm()
     query = request.GET.get('query', '')
@@ -116,7 +115,8 @@ def productosAdd(request):
         imagen=request.FILES.get("imagen")
         precio=request.POST["precio"]
         stock=request.POST["stock"]
-        categoria=request.POST["categoria"]       
+        categoria=request.POST["categoria"]
+        activo="1"       
                 
         objCategoria=Categoria.objects.get(idCategoria = categoria)
         obj=Producto.objects.create(id_producto=id,
@@ -126,7 +126,7 @@ def productosAdd(request):
                                   precio=precio,
                                   stock=stock,
                                   categoria=objCategoria,
-                                  )
+                                  activo=1)
         obj.save()
         context={'mensaje':"Ok, datos grabados..."}
         return render(request,'petanddogs/productos_add.html',context)
@@ -156,7 +156,8 @@ def productosUpdate(request):
         imagen=request.FILES.get("imagen")
         precio=request.POST["precio"]
         stock=request.POST["stock"]
-        categoria=request.POST["categoria"]       
+        categoria=request.POST["categoria"]    
+        activo="1"   
                 
         objCategoria=Categoria.objects.get(idCategoria = categoria)
         
@@ -169,6 +170,7 @@ def productosUpdate(request):
         producto.precio=precio
         producto.stock=stock
         producto.categoria=objCategoria
+        producto.activo=1
         producto.save()
         
         categorias = Categoria.objects.all()
