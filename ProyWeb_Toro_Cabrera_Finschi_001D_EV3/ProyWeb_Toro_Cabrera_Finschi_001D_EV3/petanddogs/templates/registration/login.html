@@ -71,6 +71,9 @@
             {% endif %}
             <br>
             ¿No tienes cuenta? <a href="{% url 'FormRegistro' %}">click aqui</a>
+            <br>
+            <br>
+            ¿Olvidaste tu contraseña? <a href="{%url 'password_reset_form' %}">click aqui</a>
         </form>
         <div id="idMensajes">
           {% if mensaje %}
