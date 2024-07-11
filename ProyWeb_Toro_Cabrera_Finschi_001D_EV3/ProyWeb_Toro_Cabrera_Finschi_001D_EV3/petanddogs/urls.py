@@ -33,10 +33,10 @@ urlpatterns = [
     path('procesar_compra/', views.procesar_compra, name='procesar_compra'),
     path('compras/', views.lista_compras, name='lista_compras'),
 
-    path('account/password_reset/', PasswordResetView.as_view(template_name='registration/password_reset_form.html')),
-    path('account/password_reset/done/', PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html')),
-    path('account/reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html')),
-    path('account/reset/done/', PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html')),
+    path('accounts/password_reset/', PasswordResetView.as_view(template_name='registration/password_reset_form.html')),
+    path('accounts/password_reset/done/', PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html')),
+    path('accounts/reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html')),
+    path('accounts/reset/done/', PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html')),
     path('accounts/', include('django.contrib.auth.urls')),
 ]
 
