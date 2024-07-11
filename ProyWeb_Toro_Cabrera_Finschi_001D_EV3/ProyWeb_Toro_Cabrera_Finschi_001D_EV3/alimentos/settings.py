@@ -144,4 +144,4 @@ EMAIL_HOST = 'smtp.example.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'pruebacontrasena22@gmail.com'
-EMAIL_HOST_PASSWORD = 'zdvt sxxf nrfm avar'
+EMAIL_HOST_PASSWORD = 'miif xwpm fflx koje'
