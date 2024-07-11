@@ -27,6 +27,10 @@ urlpatterns = [
     path('logout/',views.exit, name='exit'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('registrosAdd', views.registroAdd, name='registroAdd'),
+     path('agregar_al_carrito/<str:producto_id>', views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('mostrar_carrito/', views.mostrar_carrito, name='mostrar_carrito'),
+    path('procesar_compra/', views.procesar_compra, name='procesar_compra'),
+    path('compras/', views.lista_compras, name='lista_compras'),
 
     path('accounts/password_reset/', PasswordResetView.as_view(template_name='registration/password_reset_form.html')),
     path('accounts/password_reset/done/', PasswordResetDoneView.as_view(template_name='accounts/password_reset_done.html')),
