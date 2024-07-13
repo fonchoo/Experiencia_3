@@ -28,6 +28,7 @@
                     <li><a href="{% url 'adopcion' %}" class="btn"><button>Adopcion</button></a></li>
                     <li><a href="{% url 'razas' %}" class="btn"><button>Razas de perro</button></a></li>
                     {% if request.user.is_authenticated%}
+                        <li><a href="{% url 'mostrar_carrito' %}" class="btn"><button>Carro de compra</button></a></li>
                         <li><a href="{% url 'perfil' %}" ><i class="fa-solid fa-user" id="icon-register"></i></a></li>
                     {% else %}
                         <li><a href="{% url 'FormRegistro' %}"><i class="fa-solid fa-user" id="icon-register"></i></a></li>
