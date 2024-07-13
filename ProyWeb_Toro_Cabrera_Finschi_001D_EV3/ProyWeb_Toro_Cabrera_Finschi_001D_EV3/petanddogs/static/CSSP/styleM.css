@@ -55,6 +55,10 @@ body{
 .header .nav-links a{
     font-size: 700;
     color: lightslategray;
+    text-decoration: none;  /**/
+    padding: 5px 10px; /* */
+    margin-left: 10px; /*  */
+    font-size: 0.9rem; /**/
 }
 
 .header .nav-links li a:hover{
@@ -68,14 +72,14 @@ body{
 .header .btn button,
 .header .menu button{
     font-weight: 700;
-    padding: 10px 25px;
+    padding: 5px 15px;  /*10y 25*/  
     border: none;
     color: lightslategray;
     background-color: wheat;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease 0s;
-    margin-left: 50px;
+    margin-left: 10px;   /**50 antes */
 }
 
 
