@@ -140,8 +140,8 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = 'petanddogs.CustomUser'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.example.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'pruebacontrasena22@gmail.com'
-EMAIL_HOST_PASSWORD = 'miif xwpm fflx koje'
+EMAIL_HOST_PASSWORD = 'diaa mfkt tpiz mntw'
