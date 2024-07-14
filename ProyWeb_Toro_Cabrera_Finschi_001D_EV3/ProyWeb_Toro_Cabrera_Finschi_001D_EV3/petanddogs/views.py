@@ -13,6 +13,23 @@ from django.utils import timezone
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ProductoSearchForm
+
+from rest_framework import generics
+from .models import Produc
+from .serializers import ProducSerializer
+
+class ProducCreateView(generics.CreateAPIView):
+    queryset = Produc.objects.all()
+    serializer_class = ProducSerializer
+    
+class ProducDetailView(generics.RetrieveAPIView):
+    queryset = Produc.objects.all()
+    serializer_class = ProducSerializer
+    
+class ProducListView(generics.ListAPIView):
+    queryset = Produc.objects.all()
+    serializer_class = ProducSerializer
+
 # Create your views here.
 def index(request):
     context={}

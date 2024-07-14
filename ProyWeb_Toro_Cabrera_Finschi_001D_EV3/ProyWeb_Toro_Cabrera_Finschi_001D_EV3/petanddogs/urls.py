@@ -3,6 +3,8 @@ from . import views
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
+from .views import ProducCreateView, ProducDetailView, ProducListView
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('index/FormRegistro', views.formRegistro, name='FormRegistro'),
@@ -38,5 +40,9 @@ urlpatterns = [
     path('accounts/reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html')),
     path('accounts/reset/done/', PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html')),
     path('accounts/', include('django.contrib.auth.urls')),
+    
+    path('producs/', ProducCreateView.as_view(), name='crear_produc'),
+    path('producs/<int:pk>/', ProducDetailView.as_view(), name='detalle_produc'),
+    path('producs/list/', ProducListView.as_view(), name='listar_produc'),
 ]
 
