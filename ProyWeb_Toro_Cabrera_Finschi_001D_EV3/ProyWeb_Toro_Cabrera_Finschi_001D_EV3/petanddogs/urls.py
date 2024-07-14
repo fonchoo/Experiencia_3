@@ -3,6 +3,13 @@ from . import views
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
+from rest_framework import routers
+
+
+
+router=routers.DefaultRouter()
+router.register(r'programmers',views.ProgrammerViewSet)
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('index/FormRegistro', views.formRegistro, name='FormRegistro'),
@@ -38,5 +45,8 @@ urlpatterns = [
     path('accounts/reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='accounts/password_reset_confirm.html')),
     path('accounts/reset/done/', PasswordResetCompleteView.as_view(template_name='accounts/password_reset_complete.html')),
     path('accounts/', include('django.contrib.auth.urls')),
+    
+    path('', include(router.urls))
+    
 ]
 

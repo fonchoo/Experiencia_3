@@ -13,6 +13,17 @@ from django.utils import timezone
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ProductoSearchForm
+
+from rest_framework import viewsets
+from .serializer import ProgrammerSerializer
+from .models import Programmer
+
+
+class ProgrammerViewSet(viewsets.ModelViewSet):
+    queryset = Programmer.objects.all()
+    serializer_class = ProgrammerSerializer
+
+
 # Create your views here.
 def index(request):
     context={}

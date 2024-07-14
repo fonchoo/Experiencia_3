@@ -82,3 +82,12 @@ class DetalleCompra(models.Model):
         self.producto.stock -= self.cantidad
         self.producto.save()
         super(DetalleCompra, self).save(*args, **kwargs)
+        
+class Programmer(models.Model):
+    fullname = models.CharField(max_length=100)
+    nickname = models.CharField(max_length=50)
+    age = models.PositiveSmallIntegerField()
+    is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.fullname
