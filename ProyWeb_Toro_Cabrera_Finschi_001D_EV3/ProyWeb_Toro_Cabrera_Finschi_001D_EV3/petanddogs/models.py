@@ -82,3 +82,11 @@ class DetalleCompra(models.Model):
         self.producto.stock -= self.cantidad
         self.producto.save()
         super(DetalleCompra, self).save(*args, **kwargs)
+        
+class Produc(models.Model):
+    nombre = models.CharField(max_length=100)
+    descripcion = models.TextField()
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.nombre
